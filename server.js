@@ -9,23 +9,25 @@ app.use(cors());
 app.use(express.json());
 
 /* =========================
-   DANH SÁCH VIDEO GÁI
-   👉 THÊM LINK MP4 TRỰC TIẾP VÀO ĐÂY
+   DANH SÁCH VIDEO
 ========================= */
 
 const videoGai = [
-    "https://yourdomain.com/video1.mp4",
-    "https://yourdomain.com/video2.mp4",
-    "https://yourdomain.com/video3.mp4",
-    "https://yourdomain.com/video4.mp4",
-    "https://yourdomain.com/video5.mp4",
-    "https://yourdomain.com/video6.mp4",
-    "https://yourdomain.com/video7.mp4",
-    "https://yourdomain.com/video8.mp4"
+    "https://image2url.com/r2/default/videos/1772015321565-b0b63bcb-1407-487b-82a9-8c12ffea74c7.mp4",
+    "https://image2url.com/r2/default/videos/1772015449414-c46875a0-d461-4c0d-91dd-29b4d9174287.mp4",
+    "https://image2url.com/r2/default/videos/1772015477160-793aa9d8-e639-407b-939d-6de5bd71b594.mp4",
+    "https://image2url.com/r2/default/videos/1772015497060-077a393f-1c43-43af-918e-1458e7d57140.mp4",
+    "https://image2url.com/r2/default/videos/1772015520494-1927384e-efca-4e17-9238-6b510a73aeb4.mp4",
+    "https://image2url.com/r2/default/videos/1772015541585-326a744d-f1e3-4116-bacb-fc732da00c39.mp4",
+    "https://image2url.com/r2/default/videos/1772015561396-4adc5dca-e7eb-4198-ac5c-57c81440e407.mp4",
+    "https://image2url.com/r2/default/videos/1772015581843-0246e54f-9d4f-482e-b418-f36b9f1df567.mp4",
+    "https://image2url.com/r2/default/videos/1772015622280-9c6f2166-190f-4fe1-a440-8aed33628140.mp4",
+    "https://image2url.com/r2/default/videos/1772015644220-de4bc53c-bf1d-4bac-890b-4c50096f672a.mp4",
+    "https://image2url.com/r2/default/videos/1772015664504-6d84c350-2f43-4a09-97c3-0d5b126cd49f.mp4"
 ];
 
 /* =========================
-   HÀM RANDOM
+   RANDOM FUNCTION
 ========================= */
 
 function randomVideo() {
@@ -33,7 +35,7 @@ function randomVideo() {
 }
 
 /* =========================
-   API RANDOM VIDEO
+   API LẤY LINK RANDOM
 ========================= */
 
 app.get("/api/gai", (req, res) => {
@@ -42,34 +44,26 @@ app.get("/api/gai", (req, res) => {
     res.json({
         status: true,
         total_video: videoGai.length,
-        video_url: video,
-        download_api: `/api/gai/download?url=${encodeURIComponent(video)}`
+        video_url: video
     });
 });
 
 /* =========================
-   API DOWNLOAD VIDEO (CHO BOT)
+   API DOWNLOAD RANDOM LUÔN
 ========================= */
 
 app.get("/api/gai/download", async (req, res) => {
-    const url = req.query.url;
-
-    if (!url) {
-        return res.json({
-            status: false,
-            message: "Thiếu link video"
-        });
-    }
+    const video = randomVideo(); // 🔥 tự random luôn
 
     try {
         const response = await axios({
             method: "GET",
-            url: url,
+            url: video,
             responseType: "stream"
         });
 
         res.setHeader("Content-Type", "video/mp4");
-        res.setHeader("Content-Disposition", "attachment; filename=video.mp4");
+        res.setHeader("Content-Disposition", "attachment; filename=random.mp4");
 
         response.data.pipe(res);
 
