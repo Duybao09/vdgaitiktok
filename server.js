@@ -9,6 +9,21 @@ app.use(cors());
 app.use(express.json());
 
 /* =========================
+   TRANG CHỦ
+========================= */
+
+app.get("/", (req, res) => {
+    res.send(`
+        <h1>🔥 API by Duy Bảo 🔥</h1>
+        <p>Endpoints:</p>
+        <ul>
+            <li>/api/gai</li>
+            <li>/api/gai/download</li>
+        </ul>
+    `);
+});
+
+/* =========================
    DANH SÁCH VIDEO
 ========================= */
 
@@ -43,17 +58,18 @@ app.get("/api/gai", (req, res) => {
 
     res.json({
         status: true,
+        author: "Duy Bảo",
         total_video: videoGai.length,
         video_url: video
     });
 });
 
 /* =========================
-   API DOWNLOAD RANDOM LUÔN
+   API DOWNLOAD RANDOM
 ========================= */
 
 app.get("/api/gai/download", async (req, res) => {
-    const video = randomVideo(); // 🔥 tự random luôn
+    const video = randomVideo();
 
     try {
         const response = await axios({
