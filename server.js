@@ -13,7 +13,14 @@ app.use(express.json());
 ========================= */
 
 app.get("/", (req, res) => {
-    res.send("<h1>🔥 API by Duy Bảo 🔥</h1>");
+    res.send(`
+        <h1>🔥 API by Duy Bảo 🔥</h1>
+        <p>Endpoints:</p>
+        <ul>
+            <li>/api/gai</li>
+            <li>/api/gai/download</li>
+        </ul>
+    `);
 });
 
 /* =========================
@@ -21,34 +28,35 @@ app.get("/", (req, res) => {
 ========================= */
 
 const videoGai = [
-    // toàn bộ list của bạn giữ nguyên ở đây
+    // giữ nguyên list của bạn ở đây (25 link)
 ];
 
 /* =========================
-   RANDOM KHÔNG TRÙNG
+   RANDOM FUNCTION
 ========================= */
 
-let lastIndex = -1;
-
 function randomVideo() {
-    let randomIndex;
+    if (videoGai.length === 0) return null;
 
-    do {
-        randomIndex = Math.floor(Math.random() * videoGai.length);
-    } while (randomIndex === lastIndex);
+    const index = Math.floor(Math.random() * videoGai.length);
+    console.log("Random index:", index);
 
-    lastIndex = randomIndex;
-
-    console.log("Random index:", randomIndex);
-
-    return videoGai[randomIndex];
+    return videoGai[index];
 }
 
 /* =========================
-   API RANDOM
+   API LẤY LINK RANDOM
 ========================= */
 
 app.get("/api/gai", (req, res) => {
+    if (videoGai.length === 0) {
+        return res.json({
+            status: false,
+            message: "Danh sách video đang rỗng",
+            total_video: 0
+        });
+    }
+
     const video = randomVideo();
 
     res.json({
@@ -60,10 +68,17 @@ app.get("/api/gai", (req, res) => {
 });
 
 /* =========================
-   DOWNLOAD RANDOM
+   API DOWNLOAD RANDOM
 ========================= */
 
 app.get("/api/gai/download", async (req, res) => {
+    if (videoGai.length === 0) {
+        return res.status(500).json({
+            status: false,
+            message: "Danh sách video đang rỗng"
+        });
+    }
+
     const video = randomVideo();
 
     try {
@@ -79,6 +94,8 @@ app.get("/api/gai/download", async (req, res) => {
         response.data.pipe(res);
 
     } catch (err) {
+        console.error("Download error:", err.message);
+
         res.status(500).json({
             status: false,
             message: "Không tải được video"
@@ -87,5 +104,8 @@ app.get("/api/gai/download", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server chạy tại port ${PORT}`);
+    console.log("=================================");
+    console.log("Server chạy tại port:", PORT);
+    console.log("Tổng số video:", videoGai.length);
+    console.log("=================================");
 });
