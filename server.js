@@ -28,36 +28,70 @@ app.get("/", (req, res) => {
 ========================= */
 
 const videoGai = [
-    // giữ nguyên list của bạn ở đây (25 link)
+"https://image2url.com/r2/default/videos/1772015321565-b0b63bcb-1407-487b-82a9-8c12ffea74c7.mp4",
+"https://image2url.com/r2/default/videos/1772015449414-c46875a0-d461-4c0d-91dd-29b4d9174287.mp4",
+"https://image2url.com/r2/default/videos/1772015477160-793aa9d8-e639-407b-939d-6de5bd71b594.mp4",
+"https://image2url.com/r2/default/videos/1772015497060-077a393f-1c43-43af-918e-1458e7d57140.mp4",
+"https://image2url.com/r2/default/videos/1772015520494-1927384e-efca-4e17-9238-6b510a73aeb4.mp4",
+"https://image2url.com/r2/default/videos/1772015541585-326a744d-f1e3-4116-bacb-fc732da00c39.mp4",
+"https://image2url.com/r2/default/videos/1772015561396-4adc5dca-e7eb-4198-ac5c-57c81440e407.mp4",
+"https://image2url.com/r2/default/videos/1772015581843-0246e54f-9d4f-482e-b418-f36b9f1df567.mp4",
+"https://image2url.com/r2/default/videos/1772015622280-9c6f2166-190f-4fe1-a440-8aed33628140.mp4",
+"https://image2url.com/r2/default/videos/1772015644220-de4bc53c-bf1d-4bac-890b-4c50096f672a.mp4",
+"https://image2url.com/r2/default/videos/1772015664504-6d84c350-2f43-4a09-97c3-0d5b126cd49f.mp4",
+"https://image2url.com/r2/default/videos/1772019286892-41d8ff18-ca49-47bc-be8c-1b3eba4c8b05.mp4",
+"https://image2url.com/r2/default/videos/1772019391526-5930e0c5-c054-4dc4-b6ad-b91b160cd1be.mp4",
+"https://image2url.com/r2/default/videos/1772019410867-e782ae3a-6312-4a8a-a614-44c21d5d516e.mp4",
+"https://image2url.com/r2/default/videos/1772019447386-fa545b79-399e-491f-a8e4-457454d81b7e.mp4",
+"https://image2url.com/r2/default/videos/1772019469086-e67ee9a9-5d08-457b-8063-adceeac3f0ab.mp4",
+"https://image2url.com/r2/default/videos/1772019491104-514630e0-fd23-4983-9574-d1a600173998.mp4",
+"https://image2url.com/r2/default/videos/1772019537085-132db6b4-21c6-4016-9d61-3e78a524a573.mp4",
+"https://image2url.com/r2/default/videos/1772019553530-95acd388-1d06-4f6a-b08e-d59765bee3f1.mp4",
+"https://image2url.com/r2/default/videos/1772019570784-5ad9e547-cdca-448f-bca0-ae79451a2029.mp4",
+"https://image2url.com/r2/default/videos/1772019588853-c3c33b79-4f6e-40ee-a6f0-42592fef3b28.mp4",
+"https://image2url.com/r2/default/videos/1772019605533-f85120f5-7cf0-401e-8ce8-caf006e5b93e.mp4",
+"https://image2url.com/r2/default/videos/1772019621150-65d7bc96-df92-41d9-b320-f4c039b6ab59.mp4",
+"https://image2url.com/r2/default/videos/1772020463287-0ea2b389-cdec-4797-8de4-4f85d42b21f2.mp4",
+"https://image2url.com/r2/default/videos/1772020494654-75e4cbac-21b8-4d4f-94d8-34f7c6502122.mp4"
 ];
 
 /* =========================
-   RANDOM FUNCTION
+   BIẾN XOAY VÒNG
 ========================= */
 
-function randomVideo() {
+let currentIndex = 0;
+
+function getNextVideo() {
     if (videoGai.length === 0) return null;
 
-    const index = Math.floor(Math.random() * videoGai.length);
-    console.log("Random index:", index);
+    const video = videoGai[currentIndex];
 
-    return videoGai[index];
+    currentIndex++;
+
+    if (currentIndex >= videoGai.length) {
+        currentIndex = 0; // quay lại đầu
+    }
+
+    console.log("Index hiện tại:", currentIndex);
+
+    return video;
 }
 
 /* =========================
-   API LẤY LINK RANDOM
+   API LẤY LINK
 ========================= */
 
 app.get("/api/gai", (req, res) => {
+
     if (videoGai.length === 0) {
         return res.json({
             status: false,
-            message: "Danh sách video đang rỗng",
+            message: "Danh sách video rỗng",
             total_video: 0
         });
     }
 
-    const video = randomVideo();
+    const video = getNextVideo();
 
     res.json({
         status: true,
@@ -68,18 +102,19 @@ app.get("/api/gai", (req, res) => {
 });
 
 /* =========================
-   API DOWNLOAD RANDOM
+   API DOWNLOAD
 ========================= */
 
 app.get("/api/gai/download", async (req, res) => {
+
     if (videoGai.length === 0) {
         return res.status(500).json({
             status: false,
-            message: "Danh sách video đang rỗng"
+            message: "Danh sách video rỗng"
         });
     }
 
-    const video = randomVideo();
+    const video = getNextVideo();
 
     try {
         const response = await axios({
@@ -94,8 +129,6 @@ app.get("/api/gai/download", async (req, res) => {
         response.data.pipe(res);
 
     } catch (err) {
-        console.error("Download error:", err.message);
-
         res.status(500).json({
             status: false,
             message: "Không tải được video"
@@ -104,8 +137,6 @@ app.get("/api/gai/download", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log("=================================");
-    console.log("Server chạy tại port:", PORT);
-    console.log("Tổng số video:", videoGai.length);
-    console.log("=================================");
+    console.log("Server chạy tại port", PORT);
+    console.log("Tổng video:", videoGai.length);
 });
