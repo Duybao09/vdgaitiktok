@@ -103,7 +103,7 @@ app.get("/api/gai", (req, res) => {
 
     res.json({
         status: true,
-        author: "API BY Duy Bảo",
+        author: "API BY DUYBAO",
         total_video: videoGai.length,
         video_url: video
     });
