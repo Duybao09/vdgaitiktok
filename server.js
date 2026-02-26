@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 ========================= */
 
 const videoGai = [
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_4.mp4,
 "https://image2url.com/r2/default/videos/1772020463287-0ea2b389-cdec-4797-8de4-4f85d42b21f2.mp4",
 "https://image2url.com/r2/default/videos/1772020494654-75e4cbac-21b8-4d4f-94d8-34f7c6502122.mp4",
 "https://image2url.com/r2/default/videos/1772015321565-b0b63bcb-1407-487b-82a9-8c12ffea74c7.mp4",
@@ -55,7 +56,25 @@ const videoGai = [
 "https://image2url.com/r2/default/videos/1772032983001-b06658c0-ade3-4e87-80b1-51e657a22c01.mp4",
 "https://image2url.com/r2/default/videos/1772033003468-43521440-9c13-4b2e-ac41-4e0ed3cb3029.mp4",
 "https://image2url.com/r2/default/videos/1772033032384-be2b67ae-6c30-4b8c-8043-b9f20143efc6.mp4",
-"https://image2url.com/r2/default/videos/1772033238128-34456eb5-7bf2-442f-bd4b-573d8b4f9322.mp4"
+"https://image2url.com/r2/default/videos/1772033238128-34456eb5-7bf2-442f-bd4b-573d8b4f9322.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_2.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_3.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_5.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_6.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_7.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_8.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_9.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_10.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_11.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_12.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_13.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_14.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_15.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_16.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_17.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_18.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_19.mp4",
+"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_20.mp4"
 ];
 
 /* =========================
