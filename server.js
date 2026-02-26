@@ -1,26 +1,21 @@
 const express = require("express");
 const cors = require("cors");
-const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// 🔐 ĐỔI API KEY Ở ĐÂY (1 CHỖ DUY NHẤT)
+const API_KEY = process.env.API_KEY || "htrang245";
 
 app.use(cors());
 app.use(express.json());
 
 /* =========================
-   TRANG CHỦ
+   TRANG CHỦ (KHÔNG LỘ KEY)
 ========================= */
 
 app.get("/", (req, res) => {
-    res.send(`
-        <h1>🔥 API by Duy Bảo 🔥</h1>
-        <p>Endpoints:</p>
-        <ul>
-            <li>/api/gai</li>
-            <li>/api/gai/download</li>
-        </ul>
-    `);
+    res.send("API by Duy Bảo");
 });
 
 /* =========================
@@ -64,7 +59,7 @@ const videoGai = [
 ];
 
 /* =========================
-   BIẾN XOAY VÒNG
+   XOAY VÒNG VIDEO
 ========================= */
 
 let currentIndex = 0;
@@ -75,48 +70,43 @@ function getNextVideo() {
     const video = videoGai[currentIndex];
 
     currentIndex++;
-
     if (currentIndex >= videoGai.length) {
-        currentIndex = 0; // quay lại đầu
+        currentIndex = 0;
     }
-
-    console.log("Index hiện tại:", currentIndex);
 
     return video;
 }
 
 /* =========================
-   API LẤY LINK
+   API LẤY VIDEO (CÓ KEY)
 ========================= */
 
 app.get("/api/gai", (req, res) => {
 
-    if (videoGai.length === 0) {
-        return res.json({
+    const { apikey } = req.query;
+
+    // ❌ Thiếu key
+    if (!apikey) {
+        return res.status(401).json({
+            api: "API by Duy Bảo",
             status: false,
-            message: "Danh sách video rỗng",
-            total_video: 0
+            message: "Thiếu API Key"
         });
     }
 
-    const video = getNextVideo();
+    // ❌ Sai key
+    if (apikey !== API_KEY) {
+        return res.status(403).json({
+            api: "API by Duy Bảo",
+            status: false,
+            message: "API Key không hợp lệ"
+        });
+    }
 
-    res.json({
-        status: true,
-        author: "API BY DUYBAO",
-        total_video: videoGai.length,
-        video_url: video
-    });
-});
-
-/* =========================
-   API DOWNLOAD
-========================= */
-
-app.get("/api/gai/download", async (req, res) => {
-
+    // ❌ Không có video
     if (videoGai.length === 0) {
-        return res.status(500).json({
+        return res.json({
+            api: "API by Duy Bảo",
             status: false,
             message: "Danh sách video rỗng"
         });
@@ -124,27 +114,16 @@ app.get("/api/gai/download", async (req, res) => {
 
     const video = getNextVideo();
 
-    try {
-        const response = await axios({
-            method: "GET",
-            url: video,
-            responseType: "stream"
-        });
-
-        res.setHeader("Content-Type", "video/mp4");
-        res.setHeader("Content-Disposition", "attachment; filename=random.mp4");
-
-        response.data.pipe(res);
-
-    } catch (err) {
-        res.status(500).json({
-            status: false,
-            message: "Không tải được video"
-        });
-    }
+    res.json({
+        api: "API by Duy Bảo",
+        status: true,
+        total_video: videoGai.length,
+        video_url: video
+    });
 });
 
-app.listen(PORT, () => {
-    console.log("Server chạy tại port", PORT);
-    console.log("Tổng video:", videoGai.length);
+/* ========================= */
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log("Server chạy tại port " + PORT);
 });
