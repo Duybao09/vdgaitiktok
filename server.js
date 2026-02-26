@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 ========================= */
 
 const videoGai = [
-"https://api.telegram.org/file/bot8786009614:AAGVf9KWSMLSGxWJU_IV0dIM-X_E57DgRqo/videos/file_4.mp4,
+"https://image2url.com/r2/default/videos/1772093964438-d6c982b6-aee9-4e00-9d85-fa3a8159a899.mp4,
 "https://image2url.com/r2/default/videos/1772020463287-0ea2b389-cdec-4797-8de4-4f85d42b21f2.mp4",
 "https://image2url.com/r2/default/videos/1772020494654-75e4cbac-21b8-4d4f-94d8-34f7c6502122.mp4",
 "https://image2url.com/r2/default/videos/1772015321565-b0b63bcb-1407-487b-82a9-8c12ffea74c7.mp4",
