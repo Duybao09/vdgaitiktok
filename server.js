@@ -5,7 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 🔐 ĐỔI API KEY Ở ĐÂY (1 CHỖ DUY NHẤT)
-const API_KEY = process.env.API_KEY || "htrang245";
+const API_KEY = process.env.API_KEY || "duybao095";
 
 app.use(cors());
 app.use(express.json());
